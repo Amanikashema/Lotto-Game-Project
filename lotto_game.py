@@ -34,15 +34,19 @@ class Lotto:
                             input_list.append(int(a5.get()))
                             input_list.append(int(a6.get()))
                         except ValueError:
-                            print("enter valid literals")
                             mb.showerror("Error","Please Enter valid literals for lotto numbers")
 
-                        lotto_numbers = sorted(random.sample(range(1,49),6))
+                        # loop to create random numbers
+                        lotto_numbers = []
+                        for numbers in range(0,6):
+                            random_numbers = random.randint(1,49)
+                            lotto_numbers.append(random_numbers)
+                        sorted_lotto_numbers = sorted(lotto_numbers)
                         filename = "text_file.txt"
 
                         # statement for decision
-                        if len(lotto_numbers) == len(input_list):
-                            duplicates = set(lotto_numbers).intersection(set(input_list))
+                        if len(sorted_lotto_numbers) == len(input_list):
+                            duplicates = set(sorted_lotto_numbers).intersection(set(input_list))
                             if len(duplicates) == 0:
                                 answer.configure(text="You failed !!! " + str(self.var1.get()) + ' ' + str(self.var2.get()) + "\n Lucky Lotto Numbers are: " + str(lotto_numbers) + "\nPrize: R0 \n" + "Date: " + str(now.strftime("%Y-%m-%d %H:%M:%S")))
                             elif len(duplicates) == 1:
@@ -57,6 +61,8 @@ class Lotto:
                                 answer.configure(text="Congratulations " + str(self.var1.get()) + ' ' + str(self.var2.get()) + "\n You got 5 numbers correct \n" + "Lucky Lotto Numbers are: " + str(lotto_numbers) + "\nPrize: R8584\n" + "Date: " + str(now.strftime("%Y-%m-%d %H:%M:%S")))
                             elif len(duplicates) == 6:
                                 answer.configure(text="Congratulations " + str(self.var1.get()) + ' ' + str(self.var2.get()) + "\n You got 6 numbers correct \n" + "Lucky Lotto Numbers are: " + str(lotto_numbers) + "\nPrice: R10 000 000\n" + "Date: " + str(now.strftime("%Y-%m-%d %H:%M:%S")))
+
+                            # code to create a text file
                             file = open(filename, "w+")
                             file.close()
                             file = open(filename, "a")
